@@ -58,8 +58,18 @@ functions:
   api:
     handler: wsgi_handler.handler
     events:
-      - http: ANY /
-      - http: ANY {proxy+}
+      - http:
+          path: /
+          method: get
+          cors: true
+      - http:
+          path: episodeof/{comic_id}
+          method: get
+          cors: true
+      - http:
+          path: imageof/{episode_id}
+          method: get
+          cors: true
 custom:
   wsgi:
     app: api.app
