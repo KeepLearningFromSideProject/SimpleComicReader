@@ -59,7 +59,7 @@ functions:
     handler: wsgi_handler.handler
     events:
       - http:
-          path: /
+          path: comics
           method: get
           cors: true
       - http:

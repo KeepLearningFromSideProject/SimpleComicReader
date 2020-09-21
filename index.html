@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comic</title>
+    <script>
+        function updateComic() {
+            document.querySelectorAll('#comic option').forEach(o => o.remove());
+            fetch('https://vwzflq6obd.execute-api.ap-northeast-1.amazonaws.com/dev/comics/')
+                .then(response => response.json())
+                .then(comics => {
+                        comics.forEach(comic => addOption(comic.id, comic.comic_name, 'comic'));
+                    }
+                );
+        }
+
+        function updateEpisode() {
+        	const comic_id = document.getElementById("comic").value;
+            document.querySelectorAll('#episode option').forEach(o => o.remove());
+            fetch('https://vwzflq6obd.execute-api.ap-northeast-1.amazonaws.com/dev/episodeof/' + comic_id)
+                .then(response => response.json())
+                .then(episodes => {
+                        episodes.forEach(episode => addOption(episode.id, episode.episode_name, 'episode'));
+                    }
+                );
+        }
+
+        function updateImageList() {
+        	const episode_id = document.getElementById("episode").value;
+        	document.querySelectorAll('#image_list option').forEach(o => o.remove());
+            fetch('https://vwzflq6obd.execute-api.ap-northeast-1.amazonaws.com/dev/imageof/' + episode_id)
+                .then(response => response.json())
+                .then(images => {
+                        images.forEach(image => addOption(image.image_url, image.image_url, 'image_list'));
+                    }
+                );
+        }
+
+        function updatePic() {
+        	const image_url = document.getElementById("image_list").value;
+            document.getElementById('pic').src = image_url;
+        }
+
+        function addOption(id, text, selection_id) {
+            const option = document.createElement("option");
+            option.text = text;
+            option.value = id;
+
+            const select = document.getElementById(selection_id);
+            select.appendChild(option);
+        }
+    </script>
+</head>
+<body onload=updateComic()>
+
+Choose a comic:
+<select name="comic" id="comic" onchange=updateEpisode()>
+</select>
+<br>
+
+Choose a episode:
+<select name="episode" id="episode" onchange=updateImageList()>
+</select>
+<br>
+
+Choose a page:
+<select name="image_list" id="image_list" onchange=updatePic()>
+</select>
+<br>
+
+<img id='pic'>
+</body>
+</html>

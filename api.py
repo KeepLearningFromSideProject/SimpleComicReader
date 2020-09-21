@@ -1,6 +1,7 @@
 import json
 import pymysql
 from flask import Flask
+from flask_cors import cross_origin
 
 app = Flask(__name__)
 
@@ -12,7 +13,9 @@ connection = pymysql.connect(
     password='thepassword'
 )
 
+
 @app.route("/comics/", methods=['GET'])
+@cross_origin()
 def getComics():
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM comics')
@@ -21,7 +24,9 @@ def getComics():
 
     return json.dumps(data)
 
+
 @app.route("/episodeof/<comic_id>", methods=['GET'])
+@cross_origin()
 def getEpisodes(comic_id: str):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM episodes WHERE comic_id = %s', comic_id)
@@ -32,6 +37,7 @@ def getEpisodes(comic_id: str):
 
 
 @app.route("/imageof/<episode_id>", methods=['GET'])
+@cross_origin()
 def getImages(episode_id: str):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT id, image_url FROM images WHERE episode_id = %s', episode_id)
