@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Comic</title>
     <script>
+        var api_host = 'https://6rlugydksl.execute-api.ap-northeast-1.amazonaws.com/dev';
         function updateComic() {
             document.querySelectorAll('option').forEach(o => o.remove());
-            fetch('https://vwzflq6obd.execute-api.ap-northeast-1.amazonaws.com/dev/comics/')
+            fetch(api_host + '/comics/')
                 .then(response => response.json())
                 .then(comics => {
                         for (let i in comics) {
@@ -20,7 +21,7 @@
         	const comic_id = document.getElementById("comic").value;
             document.querySelectorAll('#episode option').forEach(o => o.remove());
             document.querySelectorAll('#image_list option').forEach(o => o.remove());
-            fetch('https://vwzflq6obd.execute-api.ap-northeast-1.amazonaws.com/dev/episodeof/' + comic_id)
+            fetch(api_host + '/episodeof/' + comic_id)
                 .then(response => response.json())
                 .then(episodes => {
                         for (let i in episodes) {
@@ -34,7 +35,7 @@
         function updateImageList() {
             const episode_id = document.getElementById("episode").value;
         	document.querySelectorAll('#image_list option').forEach(o => o.remove());
-            fetch('https://vwzflq6obd.execute-api.ap-northeast-1.amazonaws.com/dev/imageof/' + episode_id)
+            fetch(api_host + '/imageof/' + episode_id)
                 .then(response => response.json())
                 .then(images => {
                         for (let i in images) {
@@ -62,9 +63,9 @@
             const e_s = document.getElementById('episode');
             const im_s = document.getElementById('image_list');
 
-            if (im_s.length - 1 > im_s.selectedIndex + 1) {
+            if (im_s.length > im_s.selectedIndex + 1) {
                 im_s.selectedIndex += 1;
-            } else if (e_s.length - 1 > e_s.selectedIndex + 1) {
+            } else if (e_s.length > e_s.selectedIndex + 1) {
                 e_s.selectedIndex += 1;
                 updateImageList();
             } else {

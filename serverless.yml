@@ -70,6 +70,11 @@ functions:
           path: imageof/{episode_id}
           method: get
           cors: true
+    vpc:
+      securityGroupIds:
+        - sg-0b7678c065341b03f
+      subnetIds:
+        - subnet-ae2efde6
 custom:
   wsgi:
     app: api.app

@@ -8,7 +8,7 @@ app = Flask(__name__)
 connection = pymysql.connect(
     db='test',
     port=3306,
-    host='localhost',
+    host='localhost'
     user='theusername',
     password='thepassword'
 )
@@ -29,7 +29,7 @@ def getComics():
 @cross_origin()
 def getEpisodes(comic_id: str):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute('SELECT * FROM episodes WHERE comic_id = %s', comic_id)
+    cursor.execute('SELECT id, comic_id, episode_name FROM episodes WHERE comic_id = %s', comic_id)
     data = cursor.fetchall()
     cursor.close()
 
