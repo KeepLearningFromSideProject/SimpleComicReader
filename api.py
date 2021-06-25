@@ -1,3 +1,4 @@
+import os
 import json
 import pymysql
 from flask import Flask
@@ -6,11 +7,11 @@ from flask_cors import cross_origin
 app = Flask(__name__)
 
 connection = pymysql.connect(
-    db='test',
-    port=3306,
-    host='localhost'
-    user='theusername',
-    password='thepassword'
+    host=os.environ['db_host'],
+    port=int(os.environ['db_port']),
+    db=os.environ['db_name'],
+    user=os.environ['db_user'],
+    password=os.environ['db_pass']
 )
 
 
