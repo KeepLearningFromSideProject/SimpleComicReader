@@ -22,3 +22,12 @@ var/
 
 # python
 __pycache__
+
+# js
+node_modules/*
+package-lock.json
+package.json
+
+
+# ide
+.idea/*
