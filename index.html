@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Comic</title>
     <script>
-        var api_host = 'https://6rlugydksl.execute-api.ap-northeast-1.amazonaws.com/dev';
+        var api_host = 'https://nic6fcbe8i.execute-api.ap-northeast-1.amazonaws.com/dev';
         function updateComic() {
             document.querySelectorAll('option').forEach(o => o.remove());
             fetch(api_host + '/comics/')
@@ -14,13 +14,13 @@
                             addOption(comics[i].id, comics[i].comic_name, 'comic')
                         }
                     }
-                );
+                )
+                .then(_ => updateEpisode());
         }
 
         function updateEpisode() {
         	const comic_id = document.getElementById("comic").value;
             document.querySelectorAll('#episode option').forEach(o => o.remove());
-            document.querySelectorAll('#image_list option').forEach(o => o.remove());
             fetch(api_host + '/episodeof/' + comic_id)
                 .then(response => response.json())
                 .then(episodes => {
@@ -28,8 +28,8 @@
                             addOption(episodes[i].id, episodes[i].episode_name, 'episode');
                         }
                     }
-                ).then(_ => updateImageList())
-                .then(_ => updatePic())
+                )
+                .then(_ => updateImageList());
         }
 
         function updateImageList() {
@@ -42,7 +42,8 @@
                             addOption(images[i].image_url, images[i].image_url, 'image_list');
                         }
                     }
-                ).then(_ => updatePic())
+                )
+                .then(_ => updatePic());
         }
 
         function updatePic() {
